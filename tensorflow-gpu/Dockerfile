@@ -1,17 +1,7 @@
-FROM nvidia/cuda:9.1-runtime-ubuntu16.04
+FROM nvidia/cuda:9.1-runtime-centos7
 
-RUN apt update && apt install -y \
-    build-essential \
-    curl \
-    git \
-    wget \
-    libjpeg-dev \
-    openjdk-8-jdk \
-    && rm -rf /var/lib/lists/*
-
-COPY bazel.list /etc/apt/sources.list.d/
-RUN curl https://bazel.build/bazel-release.pub.gpg | apt-key add - && \
-    apt-get update && apt-get install -y bazel
+COPY bazel.repo /etc/yum.repos.d/
+RUN yum install bazel
 
 # Install Anaconda
 WORKDIR /
